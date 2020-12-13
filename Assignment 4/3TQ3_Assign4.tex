@@ -1,0 +1,45 @@
+\documentclass[12pt]{article}
+%\usepackage{parskip}
+\usepackage[letterpaper, margin=1in]{geometry}
+%\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{listing}
+\usepackage[framed, numbered]{matlab-prettifier}
+\lstset{inputpath=Matlab}
+%\graphicspath{{./images/}}
+\title{ELECENG 3TQ3 Assignment 4}
+\author{Raeed Hassan \\ hassam41 \\ McMaster University}
+\begin{document}
+\maketitle
+\pagebreak
+\begin{enumerate}
+    \item Given Gaussian random variables $X$ and $Y$ with zero means and covariance matrix $\big[\begin{smallmatrix} 4 & 1\\ 1 & 9 \end{smallmatrix}\big]$ find random variables $U=aX+bY$ and $V=cX+dY$ so that $U$ and $V$ are uncorrelated. Hint: there are multiple solutions for this problem you just need to pick one. \\
+    From the covariance matrix, we can determine that: \\ $\text{cov}(x,y) = \text{cov}(y,x) = 1$, $\text{Var}[X] = \sigma^2_X = 4$, $\text{Var}[Y] = \sigma^2_Y = 9$ \\
+    \begin{equation*}
+    \begin{aligned}
+        \text{cov}(u,v) &= \text{cov}(ax + by, cx + dy) \\
+        &= ac~\text{cov}(x, x) + ad~\text{cov}(x, y) + bc~\text{cov}(y, x) + bd~\text{cov}(y, y) \\
+        &= ac~\text{Var}[X] + ad(1) + bc(1) + bd~\text{Var}[Y] \\
+        \text{cov}(u,v) &= 4ac + ad + bc + 9bd \\
+        0 &= 4ac + ad + bc + 9bd
+    \end{aligned}
+    \end{equation*}
+    This equation has multiple solutions. A possible solution is $a = 1$, $b = 1$, $c = 1$, and $d = -0.5$.
+    \item Assume that the number of trucks entering weigh station per day is distributed as a Poisson random variable with $\lambda$=50 and that the weights of each truck are iid Gaussian distributed with mean 7500 kg and standard deviation = 500 kg and independent of the number of trucks entering the stop. Let M be total weight measured per day in the weigh station. Find the expected value and variance of M. Hint: you can either use moment generating functions or central limit theorem. \\
+    Let $N$ = Poisson random variable for number of trucks entering weigh station \\
+    Let $X$ = Gaussian random variable for weights of each truck 
+    \begin{equation*}
+    \begin{aligned}
+        \phi_M(s) &= \phi_N(\ln \phi_X(s)) \\
+        \phi_X(s) &= e^{s\mu + s^2\sigma^2 / 2} = e^{7500s + 125000s^2}\\
+        \phi_N(s) &= e^{\lambda(e^s - 1)} = e^{50(e^s-1)} \\
+        \phi_M(s) &= e^{50(e^{\ln(e^{7500s + 125000s^2})}-1)} \\
+        \phi_M(s) &= e^{50(e^{(7500s + 125000s^2)}-1)} \\
+        \phi_M'(s) &= 50e^{50\left(e^{7500s+125000s^2}-1\right)+125000s^2+7500s}\left(250000s+7500\right) \\
+        \text{E}[M] &= \phi_M'(0) = \text{E}[N]\text{E}[X] = 50\cdot7500 = 375000 \text{ kg} \\
+        \text{Var}[M] &= \text{E}[N]\text{Var}[X] + \text{Var}[N](\text{E}[X])^2 = 50\cdot500^2 + 50(7500)^2 = 2.825 \times 10^9 \text{ kg}
+    \end{aligned}
+    \end{equation*}
+\end{enumerate}
+\end{document}

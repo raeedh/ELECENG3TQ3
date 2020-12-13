@@ -1,0 +1,173 @@
+\documentclass[12pt]{article}
+%\usepackage{parskip}
+\usepackage[letterpaper, margin=1in]{geometry}
+%\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{listing}
+\usepackage[framed, numbered]{matlab-prettifier}
+\lstset{inputpath=Matlab}
+%\graphicspath{{./images/}}
+\title{ELECENG 3TQ3 Assignment 2}
+\author{Raeed Hassan \\ hassam41 \\ McMaster University}
+\begin{document}
+\maketitle
+\pagebreak
+\begin{enumerate}
+    \item Let us consider breaking a chocolate bar of length L randomly into two pieces of lengths L1 and L2 such that L=L1+L2. Find
+    \begin{enumerate}
+        \item Probability that L1 $>$ L2
+
+        The length L1 can be described as an uniform (0,L) random variable. For L1 $>$ L2, the value of L1 must be greater than L/2. The CDF of L1 at L/2 is equal to $F_{\text{L1}}(\text{L}/2)=(\text{L}/2-0)/(\text{L}-0)=1/2=0.5$, which is equal to the probability that L1 $<$ L/2. The probability of L1 $>$ L/2 is equal to $1 - \text{L1} < \text{L/2} = 0.5$, therefore the probability that L1 $>$ L2 = 0.5. 
+
+        \item Expected value of L1
+        
+        The expected value of L1 is E$[\text{L1}] = (\text{L} + 0)/2 = \text{L}/2$.
+ 
+        \item Expected value of min(L1,L2)
+
+        min(L1,L2) will be the smaller piece of chocolate, L2 if L1 $>$ L2 and L1 if L2 $>$ L1. The smaller piece of chocolate will be uniformly distributed between 0 and L/2 and can be described as a uniform (0,L/2) random variable. The expected value of the uniform random variable is $(\text{L}/2 + 0) / 2 = \text{L}/4$. The expected value of min(L1,L2) is L/4.
+    \end{enumerate}
+    \item John and Susan are going out on a first date. They agree to meet at Nathan Phillips Square at 8:00 p.m. Since it is their first date John decides that he will be their early in order to impress Susan and he plans to arrive at 7:45. Due to randomness in TTC performance the difference between his intended arrival time and actual arrival time is Gaussian distributed with mean 0 and variance 25.  Susan decides to be fashionably late and she plans to arrive at 8:10 p.m. She decides to take a cab and hence the difference between her arrival time and intended arrival time is Gaussian distributed with mean 0 and variance 9.
+
+    \begin{enumerate}
+        \item Find probability that John arrives before 8 p.m.
+        \item Find probability that John arrives after 8:10 p.m
+
+        Questions 2a and 2b were solved using Matlab, with the solution in the q2ab.m file. The probability that John arrives before 8 p.m. is 0.99865.
+        The probability that John arrives after 8:10 p.m. is $2.8665 \times 10^{-7}$. The Matlab code used to determine these values is shown in Listing \ref{listing:q2ab}. The Matlab script creates a normal distribution of mean 0 and variance 25, then calculates the answers to the problem using the cdfs calculated using the distribution.
+
+        \lstinputlisting[style=Matlab-editor, caption={Questions 2a \& 2b}, label={listing:q2ab}]{q2ab.m}
+
+        \item Using MATLAB find the probability that John arrives before Susan. Hint: using randn command in matlab you can generate two independent Gaussian random variables.X=5*randn; generates random variable with mean 0 and variance 25 and Y=3*randn; generates random variable with mean 0 and variance 9. Using these two commands you can generate large number of experiments and count number of times John arrives before Susan. Note: answers derived using probability theory will also be accepted.
+        
+        The probability that John arrives before Susan was determined to be 0.99999. The Matlab code used to determine this value is shown in Listing \ref{listing:q2c}, with the code being in the q2c.m file. The Matlab script creates normal probability distributions for John and Susan's arrival times, then compares the values of a random number from distribution in a loop that runs 1000000 times. A counter is incremented each time it is determined that John would arrive before Susan, and this counter is divided by the total number of tests (1000000) to determine the probability of John arriving before Susan.
+
+        \lstinputlisting[style=Matlab-editor, caption={Question 3}, label={listing:q2c}]{q2c.m}
+    \end{enumerate}
+    \item Consider a Gaussian random variable with mean 4 and unknown variance $\sigma^2$. Find the variance so that P[$1 \leq X \leq 3$] is maximized
+    
+    The problem was solved using Matlab, with the solution in the q3.m file. The value of $\sigma$ that maximizes P[$1 \leq X \leq 3$] was found to be 1.91, therefore the value of $\sigma^2$ that maximizes P[$1 \leq X \leq 3$] is 3.6405. The Matlab code used to determine this value is shown in Listing \ref{listing:q3}. The Matlab script creates normal distributions with $\sigma$ values between 0.01 and 10, and calculates the cumulative distribution function of each normal probability distribution at 1 and 3, then subtracts these values to determine P[$1 \leq X \leq 3$] for each value of $\sigma$. The maximum value of $\sigma$ is updated each time the value of P[$1 \leq X \leq 3$] at a value of $\sigma$ is determined to be greater than the previously determined value of $\sigma$. The maximum value of $\sigma$ and $\sigma^2$ are displayed at the end.
+
+    \lstinputlisting[style=Matlab-editor, caption={Question 3}, label={listing:q3}]{q3.m}
+    
+    \item Assume that the life cycle of the light bulb is a function of the power. Let the expected life be exponentially distributed variable such that 60W bulb has expected life of 2000 hours and 120W has expected life of 1200 hours. Consider a long hallway in which we have one 60W bulb and one 120W bulb replaced at the same time. Also assume that their lifetimes are independent.
+    \begin{enumerate}
+        \item Find the probability that after 1 month we will have at least one functioning bulb in the hallway.
+        
+        The probability that the 60W bulb is functioning after 1 month is:
+        
+        \begin{center}
+            $\lambda = 1/2000, \quad \text{$30 \times 24 = 720$ hours in a month}$
+        \end{center}
+        \begin{equation*}
+            \begin{aligned}
+            1 -F_{60W}(h) &= 1 - e^{-\lambda h} \\
+            1 - F_{60W}(720) &= 1 - e^{-\frac{1}{2000}720} \\
+            &= 0.69768 \\
+            \end{aligned}
+        \end{equation*}
+        The probability of 120W bulb is functioning after 1 month is:
+
+        \begin{center}
+            $\lambda = 1/1200, \quad \text{$30 \times 24 = 720$ hours in a month}$
+        \end{center}
+        \begin{equation*}
+            \begin{aligned}
+            1 - F_{120W}(h) &= 1 - e^{-\lambda h} \\
+            1 - F_{120W}(720) &= 1 - e^{-\frac{1}{1200}720} \\
+            &= 0.54881 \\
+            \end{aligned}
+        \end{equation*}
+        
+        The probably we have at least one functioning bulb after 1 month is $1-(1-P(60W))(1-P(120W)) = 1 - (1-0.69768)(1-0.54881) =  0.8636$.
+
+        \item Find the probability that we will not have to change bulbs for at least 1 year.
+
+        The probability that the 60W bulb is functioning after 1 year is:
+        
+        \begin{center}
+            $\lambda = 1/2000, \quad \text{$365 \times 24 = 8760$ hours in a year}$
+        \end{center}
+        \begin{equation*}
+            \begin{aligned}
+            1 -F_{60W}(h) &= 1 - e^{-\lambda h} \\
+            1 - F_{60W}(8760) &= 1 - e^{-\frac{1}{2000}8760} \\
+            &= 0.01253 \\
+            \end{aligned}
+        \end{equation*}
+        The probability of 120W bulb is functioning after 1 year is:
+
+        \begin{center}
+            $\lambda = 1/1200, \quad \text{$365 \times 24 = 8760$ hours in a year}$
+        \end{center}
+        \begin{equation*}
+            \begin{aligned}
+            1 - F_{120W}(h) &= 1 - e^{-\lambda h} \\
+            1 - F_{120W}(8760) &= 1 - e^{-\frac{1}{1200}8760} \\
+            &= 0.00068 \\
+            \end{aligned}
+        \end{equation*}
+    \end{enumerate}
+
+    The probability the both bulbs are functioning after 1 year is $P(60W)P(120W) = (0.01253)(0.00068) = 0.0000085$. The probability that we will not have to change bulbs for at least 1 year (both bulbs are functioning after 1 year) is 0.0000085.
+
+    \item The starship Enterprise arrives at newly discovered planet Haldurian. The scientists find that there are 3 different genders on Haldurian with different height distributions. The height of gender A is Gaussian distributed with mean 6ft and 4 inches and variance 36. The height of gender B is Gaussian distributed with mean 7ft and 10 inches and variance 16. The height of gender C is Gaussian distributed with mean 5 ft and 10 inches and variance 25. Your data also indicated that 70\% of Haldurian population is gender A, 20\% population is gender B and, 10\% population is gender C. Find
+    \begin{enumerate}
+        \item Probability that randomly chosen Haldurian is taller than 8 feet
+        
+        The problem was solved using Matlab, with the solution in the q5a.m file. The probability that a randomly chosen Haldurian is taller than 8 feet (96 inches) is 0.062008. The Matlab code used to determine this value is shown in Listing \ref{listing:q5a}. The Matlab script creates normal probability distributions for each gender, then finds the probability that a Haldurian of each gender is taller than 8 feet. The results are multiplied by the distribution of the population, then summed to determine the probability that of a Haldurian from the entire population being taller than 8 feet.
+        
+        \lstinputlisting[style=Matlab-editor, caption={Question 5a}, label={listing:q5a}]{q5a.m}
+
+        \item Probability that no Haldurian is taller than 9ft if the population of Haldurian is one billion 
+
+        The problem was solved using Matlab, with the solution in the q5b.m file. The probably that there is no Haldurian taller than 9 feet (108 inches) is approximately 0. The Matlab code used to determine this value is shown in Listing \ref{listing:q5b}. Similar to question 5a, the script finds the probability of a randomly chosen Haldurian being greater than 9 feet. This probability is used to simulate a population of one billion Haldurians 1000000 times. Each time the population of one billion has no Haldurian's that are greater than 9 feet, a counter is incremented. At the end, the counter is divided by the number of trials to determine the probability. Multiple runs of the script showed that the result could be approximated to 0.
+
+        \lstinputlisting[style=Matlab-editor, caption={Question 5b}, label={listing:q5b}]{q5b.m}
+    \end{enumerate}
+
+    \item Consider two random variables X and Y with joint pdf such that
+    \begin{equation*}
+    f_{X,Y}(x,y) = \begin{cases}
+        cx^2y \; when \; 0 \leq x \leq y \leq 2 \\
+        0
+    \end{cases}
+    \end{equation*}
+    \begin{enumerate}
+        \item Find c
+        \begin{equation*}
+        \begin{aligned}
+            1 &= \int_{0}^{2} \int_0^y cx^2y  \; dxdy \\
+            1 &= \int_{0}^{2} \frac{cy^4}{3} \; dy \\
+            1 &= \frac{32c}{15} \\
+            c &= \frac{15}{32}
+        \end{aligned}
+        \end{equation*}
+        \item Find marginal distrubtions of X and Y
+        \begin{equation*}
+        \begin{aligned}
+            f_Y(y) &= \int_{-\infty}^{\infty} f_{XY}(x,y) \; dx \\
+            &= \int_{0}^{y} cx^2y \; dx \\
+            &= \int_{0}^{y} \frac{15x^2y}{32} \; dx \\
+            f_Y(y) &= 
+            \begin{cases}
+            \frac{5y^4}{32}, & 0 \leq y \leq 2\\
+            0, & \text{otherwise}
+            \end{cases}
+        \end{aligned}
+        \qquad
+        \begin{aligned}
+            f_X(x) &= \int_{-\infty}^{\infty} f_{XY}(x,y) \; dy \\
+            &= \int_{x}^{2} cx^2y \; dy \\
+            &= \int_{x}^{2} \frac{15x^2y}{32} \; dy \\
+            f_X(x) &= 
+            \begin{cases}
+            \frac{15x^2}{32}(2-\frac{x^2}{2}), & 0 \leq x \leq 2 \\
+            0, & \text{otherwise} \\
+            \end{cases}
+        \end{aligned}
+        \end{equation*}
+    \end{enumerate}
+\end{enumerate}
+\end{document}

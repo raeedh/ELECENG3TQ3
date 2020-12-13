@@ -1,0 +1,79 @@
+\documentclass[12pt]{article}
+%\usepackage{parskip}
+\usepackage[letterpaper, margin=1in]{geometry}
+%\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{listing}
+\usepackage[framed, numbered]{matlab-prettifier}
+\lstset{inputpath=Matlab}
+%\graphicspath{{./images/}}
+\title{ELECENG 3TQ3 Assignment 3}
+\author{Raeed Hassan \\ hassam41 \\ McMaster University}
+\begin{document}
+\maketitle
+\pagebreak
+\begin{enumerate}
+    \item Let X be exponentially distributed random variable with $\lambda = 1$ and let Y be Gaussian distributed with mean $\mu$ and variance $\sigma^2$. Find:
+    \begin{enumerate}
+        \item distribution of Z = X + Y \\
+        \begin{equation*}
+        \begin{aligned}
+            f_Z(z) &= \int f_X(z-y)f_Y(y) dy = \int f_X(x)f_Y(z-x) dx \\
+            f_Z(z) &= \int f_X(x)f_Y(z-x) dx \\
+            f_Z(z) &= \int e^{-x} \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{1}{2}(\frac{z-x-\mu}{\sigma})^2} dx \\
+            f_Z(z) &= \frac{1}{\sigma\sqrt{2\pi}} \int e^{-x-\frac{1}{2}(\frac{z-x-\mu}{\sigma})^2)} dx \\
+            f_Z(z) &= \frac{1}{2} e^{\left(\mu + \frac{\sigma^2}{2} - z\right)} \text{erf}\left(\frac{x-z+\sigma^2+\mu}{\sqrt{2}\sigma}\right) 
+        \end{aligned}
+        \end{equation*}
+        \item distribution $f_{X|Z}$
+        \begin{equation*}
+        \begin{aligned}
+            f_{X|Z}(x|u) &= \frac{f_{X,Z}(x,z)}{f_Z(z)} \\
+            f_{X|Z}(x|u) &= \frac{f_{X,Z}(x,z)}{\frac{1}{2} e^{\left(\mu + \frac{\sigma^2}{2} - z\right)} \text{erf}\left(\frac{x-z+\sigma^2+\mu}{\sqrt{2}\sigma}\right)} \\
+        \end{aligned}
+        \end{equation*}
+    \end{enumerate}
+    
+    \item Let X and Y be independent Gaussian distributed random variables with mean 0 and variance 1. Find:
+    \begin{enumerate}
+        \item Joint pdf of U = 2X + Y and V = -Y
+        \begin{equation*}
+        \begin{aligned}
+            E[U] &= E[2X + Y] = 0 \\
+            E[V] &= E[-Y] = 0 \\
+            Var(U) &= Var(2X + Y) = 2^2Var(X) + Var(Y) + 4Cov(X,Y) \\
+            Var(U) &= 4 + 1 = 5 \\
+            Var(V) &= Var(-Y) = Var(Y) = 1 \\
+            \mu_U &= 0, ~\mu_V = 0, ~\sigma_U = \sqrt{5}, ~\sigma_V = 1, ~\rho_{U,V} = 0 \\
+            f_{U,V}(u,v) &= \frac{exp\left[-\frac{\left(\frac{u-\mu_U}{\sigma_U}\right)^2-\frac{2\rho_{U,V}(u-\mu_U)(v-\mu_V)}{\sigma_U\sigma_V}+\left(\frac{v-\mu_V}{\sigma_V}\right)^2}{2(1-\rho^2_{U,V})}\right]}{2\pi\sigma_U\sigma_V\sqrt{1-\rho^2_{U,V}}} \\
+            f_{U,V}(u,v) &= \frac{1}{2\sqrt{5}\pi} e^{-(u^2/5 + v^2)/2}
+        \end{aligned}
+        \end{equation*}
+        \item Conditional distribution of V$|$U
+        \begin{equation*}
+        \begin{aligned}
+            f_{V|U}(v|u) &= \frac{f_{U,V}(u,v)}{f_U(u)} \\
+            &= \frac{\frac{1}{2\sqrt{5}\pi} e^{-(u^2/5 + v^2)/2}}{\frac{1}{\sqrt{10\pi}}e^{-(u/\sqrt{5})/2}}
+        \end{aligned}
+        \end{equation*}
+        \item Find probability $P(V<-3|U>1)$ \\
+        $P(V<-3|U>1) \approx 0.0036$. The probability was determined using MATLAB. Normal probability distributions for $X$ and $Y$ were generated, then put into a loop to generate a random number from each distribution. These random numbers would be used to create $U$ and $V$, which are then tested to see if they meet the requirements ($U>1$, then $V<-3$ if previous is true). The MATLAB code is shown is in Listing~\ref{listing:q2c}.
+        \lstinputlisting[style=Matlab-editor, caption={Question 2c}, label={listing:q2c}]{q2c.m}
+    \end{enumerate}
+    
+    \item Let small powerhouse have two hydro-generators G1 and G2 and let life expectancy of stator coil be exponentially distributed with expected values 35 and 40 years respectively. Let cost of repair for generator 1 be Gaussian distributed with mean 35 million dollars and variance 4. Similarly, let the cost of repair for generator 2 be Gaussian distributed with mean 34.5 million and variance 1. Assuming that only one failure per generator is possible find the expected value of the repair cost in the first year.
+
+    Let G1 be exponential random variable with $\lambda = \frac{1}{35}$ \\
+    The probability of G1 failing in the first year is:
+    \begin{equation*}
+        P(G1 < 1) = 1 - e^{-\lambda x} = 1 - e^{-\frac{1}{35}}
+    \end{equation*}
+    Let G2 be exponential random variable with $\lambda = \frac{1}{40}$ \\
+    The probability of G2 failing in the first year is:
+    \begin{equation*}
+        P(G1 < 1) = 1 - e^{-\lambda x} = 1 - e^{-\frac{1}{40}}
+    \end{equation*}
+    The expected value for the first year is $P(G1 < 1) E[\text{cost of repair for G1}] + P(G2 < 1) E[\text{cost of repair for G2}] = (1 - e^{-\frac{1}{35}})(35) + (1 - e^{-\frac{1}{40}})(34.5) \approx 1.84$ million dollars.
+\end{enumerate}
+\end{document}

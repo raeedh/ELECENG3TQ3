@@ -1,0 +1,49 @@
+\documentclass[12pt]{article}
+%\usepackage{parskip}
+\usepackage[letterpaper, margin=1in]{geometry}
+%\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{enumitem}
+%\graphicspath{{./images/}}
+\title{ELECENG 3TQ3 Assignment 1}
+\author{Raeed Hassan \\ hassam41 \\ McMaster University}
+\begin{document}
+\maketitle
+\pagebreak
+\begin{enumerate}
+    \item Four engineers: Anna, Brian, Cynthia and David are taking PEO exam. Let A denote event that Anna passed the exam, let B denote event that Brian passed the exam, let C denote event that Cynthia passed the exam and let D denote event that David passed the exam. Using set operations describe the following events:
+    \begin{enumerate}
+        \item Nobody passed the exam \\
+        $A^c \cap B^c \cap C^c \cap D^c $
+        \item Anna passed the exam \\
+        $A$
+        \item Only one engineer passed the exam \\
+        $(A \cap (B^c \cap C^c \cap D^c)) \cup (B \cap (A^c \cap C^c \cap D^c)) \cup (C \cap (A^c \cap B^c \cap D^c)) \cup (D \cap (A^c \cap B^c \cap C^c)) $
+        \item At least one engineer passed the exam \\
+        $A \cup B \cup C \cup D$
+    \end{enumerate}
+    \item Canadian Tire has 30 unlabeled fertilizer bags. Twenty-four (24) of these bags are filled with the lower quality fertilizer while six (6) bags are filled with the higher quality fertilizer. If John bought 4 bags what is the probability that he got at least 2 high quality fertilizer bags?
+    \begin{center}
+        Let H be the high quality fertilizer bags
+    \end{center}
+    \[
+    \begin{aligned}
+        P(\text{$\geq$ 2 H}) &= 1 - P(0\text{H}) - P(1\text{H}) \\
+        &= 1 - \frac{{6 \choose 0}{24 \choose 4}}{{30 \choose 4}} - \frac{{6 \choose 1}{24 \choose 3}}{{30 \choose 4}} \\
+        P(\text{$\geq$ 2 H}) &= 0.169
+    \end{aligned}    
+    \]
+    
+    \item Two coins A and B are tossed 10 times each. When tossing coin A the observer recorded 6 tails and 4 heads. When tossing coin B the observer recorded 8 tails and 2 heads. 
+    \begin{enumerate}
+        \item What is the probability of getting 6 tails and 4 heads if coin A is fair. \\
+        If coin A is fair, the probability of getting a tail in a single toss is $50\%$ or $0.5$. The probability of getting 6 tails in 10 tosses is $P(6\text{T}) = {10 \choose 6} (0.5)^6 (0.5)^4 = 0.205$ or $20.5\%$.
+        \item What is the probability of getting 8 tails and 2 heads if coin B is fair. \\
+        If coin B is fair, the probability of getting a tail in a single toss is $50\%$ or $0.5$. The probability of getting 8 tails in 10 tosses is $P(8\text{T}) = {10 \choose 8} (0.5)^8 (0.5)^2 = 0.044$ or $4.4\%$.
+        \item If you know that only one coin is fair, which one would you pick as a fair coin? Justify your answer. \\
+        If a coin is a fair coin, the probability of getting a tail in a single toss is $0.5$ or $50\%$, and the expected number of tails in $n$ tosses is $0.5n$. In the case of 10 tosses, the expected number of tails is $0.5 \cdot 10 = 5$ tails. If only one coin is fair, it is more likely that coin A is the fair coin as the number of tails recorded in 10 tosses (6 tails) is closer to the expected number of tails in 10 tosses (5 tails) than coin B (8 tails).
+        \item Assuming that you take the role of observer and are given two coins of which one is fair and the other is false. Propose an experiment consisting of up to total 100 tosses including both coins which you will use to determine which coin is fair. Select the number of tosses for each coin and explain in one paragraph how you will decide which coin is fair. \\
+        The number of tosses for both coins should be equal to allow for a fair comparison of the two results, this means that both coins will be tossed 50 times. The result for each coin toss (heads or tails) should be recorded. The results for each coin will be compared against the expected result for 50 coin tosses of a fair coin. The expected result for the number of heads and tails in 50 tosses of a fair coin is 25 heads and 25 tails. Pick either heads or tails and compare the number of the result for each coin against the expected result (25), the coin that is closer to the expected result is more likely to be the fair coin. For example, if two coins A and B were both tossed 50 times with A getting 24 heads and B getting 20 heads, it is more likely that A is the fair coin as its experimental result is closer to the expected result. If the number of heads and tails are the same for both coins after 50 tosses, it is impossible to determine which is the fair coin without conducting more tosses as the experimental information suggests that both coins are equally fair. 
+    \end{enumerate}
+\end{enumerate}
+\end{document}

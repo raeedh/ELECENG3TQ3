@@ -1,0 +1,114 @@
+\documentclass[12pt]{article}
+\usepackage[letterpaper, margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{listing}
+\usepackage[framed, numbered]{matlab-prettifier}
+\lstset{inputpath=Matlab}
+\title{ELECENG 3TQ3 Midterm Assignment}
+\author{Raeed Hassan \\ hassam41 \\ McMaster University}
+\begin{document}
+\maketitle
+\pagebreak
+\begin{enumerate}
+    \item Assume there are 5 keys and only one unlocks the door in front of you but you do not know which one. You first try one key and if it does not work you put it aside and try another key. You repeat the process until the door is unlocked.
+    \begin{enumerate}
+        \item Find the probability that you will need more than two attempts.
+        
+        The probability that you will need more than two attempts is equal to the probability of the first two attempts not unlocking the door, which is $(\frac{4}{5})(\frac{3}{4}) = \frac{12}{20} = 0.6$.
+
+        \item Find the probability that you will need 5 attempts.
+        
+        The probability you will need need 5 attempts is $(\frac{4}{5})(\frac{3}{4})(\frac{2}{3})(\frac{1}{2}) = 0.2$.
+
+        \item What is the probability that you unlock the door with first attempt.
+
+        The probability that you unlock the door with the first attempt is $\frac{1}{5} = 0.2$.
+    \end{enumerate}
+
+    \item Research results indicate that among 100 000 randomly selected men and 100 000 randomly selected women there are 5\% color blinded men and 25\% color blinded women. If a randomly chosen person among these 200 000 people is color blinded what is the probability that that person is a man?
+
+    If a randomly chosen person among these 200 000 people is color blinded, the probability that that person is a man is $\frac{5000}{5000+25000} = \frac{1}{6}$. There are $100000 * 0.05 = 5000$ color blinded men and $100000 * 0.25 = 25000$ color blinded men in the 200000 person sample. Therefore the probability of a color blinded person being a man is the number of color blinded men divided the total number of color blinded men and women.
+    
+    \item We are rolling a fair dice until we get number 6. Find the probability that we will need at least three rolls.
+
+    The probability of needing at least three rolls is the the probability of not getting the number 6 in the first two rolls. This probability is $(\frac{5}{6})(\frac{5}{6}) = (\frac{25}{36})$ = 0.69.
+
+    \item Let X be uniformly distributed variable on interval [0,2] and Y uniformly distributed random variable on interval [0,4]. Find:
+    \begin{enumerate}
+        \item Probability that X + Y $>$ 1
+
+        The probability that X + Y $>$ 1 is approximately 0.9375 or 93.75\%.
+
+        \item Probability that X + Y $>$ 1 and Y $>$ X
+
+        The probability that X + Y $>$ 1 and Y $>$ X is approximately 0.7188 or 71.88\%.
+    \end{enumerate}
+    These probabilities were determined using Matlab, by generating a random number from each uniform random distribution (X and Y) and comparing them in a loop over a large number of trials to determine the probability of the events occurring. The Matlab code used to determine the solution is shown in Listing \ref{listing:q4}.
+    \lstinputlisting[style=Matlab-editor, caption={Question 4}, label={listing:q4}]{question4.m}
+
+    \item Two trains each of length 180m are moving along two different intersecting tracks with speed 30m/s. Assuming that time at which they enter intersection is random uniformly distributed on [9h, 9h 30 min] find the probability that collision will be avoided.
+
+    The probability that a collision will be avoided is approximately 0.9944 or 99.44\%. For the trains to avoid collision, the time they enter the intersection must be at least 5 seconds apart (the first 180m train must have cleared the intersection; assumes intersection takes no space). The Matlab code used to determine the solution is shown in Listing \ref{listing:q5}. The Matlab script counts the number of times the difference between a random number taken from two distributions (each representing one of the two trains) is greater than 5 seconds and divides it by the total number of trials.
+    \lstinputlisting[style=Matlab-editor, caption={Question 5}, label={listing:q5}]{question5.m}
+
+    \item The weight of McMaster students is Gaussian distributed with mean 86kg and standard deviation 8kg. If the number of McMaster students is 30000 estimate the number of students whose weight is at least 90kg.
+
+    The number of McMaster students whose weight is at least 90kg was estimated to be 9256.1262. The number of McMaster students whose weight is at least 90kg can be estimated by multiplying the probability of a student having a weight of at least 90kg (1 minus the CDF of the Gaussian distribution at 90kg) by the total number of McMaster students. The Matlab code used to determine the solution is shown in Listing \ref{listing:q6}.
+    \lstinputlisting[style=Matlab-editor, caption={Question 6}, label={listing:q6}]{question6.m}
+
+    \item The waiting time for examination in the walk-in clinic is Gaussian distributed with expected value of 20 minutes. After analyzing the data it has been found that 21.186\% of patients are waiting at least 15 minutes. Find probability that randomly chosen patient will wait at least 10 minutes.
+
+    The probability that randomly chosen patient will wait at least 10 minutes is 0.9452 or 94.52\%. The value of $\sigma$ can be determined from the mean of the Gaussian distribution (20) and its CDF at 15 minutes ($1-0.21186$). The probability of a randomly chosen patient waiting at least 10 minutes can then be determined by subtracting the the CDF of the distribution at 10 from 1. The Matlab code used to determine the solution is shown in Listing \ref{listing:q7}.
+    \lstinputlisting[style=Matlab-editor, caption={Question 7}, label={listing:q7}]{question7.m}
+
+    \item The Tesla CEO, Mr. Elon Musk, decides to give a talk to both Engineering and Social Sciences students. The lecture is supposed to start at 8:30 a.m. and the capacity of the hall is 200 students. The time difference between the arrival time and 8:30 a.m. for the engineering students can be modeled as the exponential random variable with expected value 5 minutes. Similarly, the time difference between the arrival time and 8:30 a.m. for the society students  can be modelled as exponential random variable with expected value 10 minutes. Assuming that there are 20 seats in the front row find
+    \begin{enumerate}
+        \item Probability that the first student entering the lecture hall is an engineering student.
+
+        Let the exponential random variable for engineering students be $X$ and the exponential random variable for society students be $Y$. The probability that the first student entering the lecture hall is an engineering student is: 
+        \begin{equation*}
+        \begin{aligned}
+            P(X < Y) &= \int_0^{\infty} P(X > t) P(Y = t) dt \\
+            &= \int_0^{\infty} (1-\underbrace{P(X < t)}_{\text{CDF}}) \underbrace{P(Y = t)}_{\text{PDF}} dt \\
+            &= \int_0^{\infty} (1-(1-e^{-5t}))(10e^{-10t}) dt \\
+            &= \int_0^{\infty} (e^{-5t})(10e^{-10t}) dt \\
+            &= \frac{2}{3}
+        \end{aligned}
+        \end{equation*}
+        The probability that the first student entering the lecture hall is an engineering student is $\frac{2}{3}$ or 66.67\%.
+
+        \item Probability that the number of engineering students in the first row is larger than the number of society students.
+
+        Using the probability determined in 8a, we can create a binomial distribution with $n = 20$ number of trials and $p = \frac{2}{3}$ probability of success to determine the probability of more engineering students arriving before society students. Let $x$ be the number of engineering students in front row.
+        \begin{equation*}
+        \begin{aligned}
+            P(x > 10) &= \sum_{x=11}^{20} \binom{n}{x} p^x (1-p)^{(x-n)} \\
+            &= 0.9081
+        \end{aligned}
+        \end{equation*}
+        The probability that the number of engineering students in the front row is larger than the number of society students is 0.9081 or 90.81\%.
+        
+        \item Probability that ALL the seats in the front row will be occupied by engineering students.
+
+        Using the probability determined in 8a, we can create a binomial distribution with $n = 20$ number of trials and $p = \frac{2}{3}$ probability of success to determine the probability of 20 engineering students arriving before society students.
+        \begin{equation*}
+            \begin{aligned}
+                P(x = 20) &= \binom{n}{20} p^20 (1-p)^{(20-n)} \\
+                &= 0.0003
+            \end{aligned}
+        \end{equation*}
+        The probability that ALL the seats in the front row will be occupied by engineering students is 0.0003 or 0.03\%.
+    \end{enumerate}
+    To verify these probabilities, groups of 200 engineering students and 200 society students were created in Matlab from the exponential distributions. Each occurance of any of the events incremented a counter which was divided by the total number of trials at the end to determine the probability of each event. In general, changing the number of students generated for each group of students did not have a noticeable difference in the resultant probabilities as long as the number of students generated for each group was sufficiently large. The Matlab code used to determine the probabilities is shown in Listing \ref{listing:q8}. The Matlab script determined the probabilities were similar to the ones calculated earlier, verifying the calculated probabilities.   
+    \lstinputlisting[style=Matlab-editor, lastline=39, caption={Question 8}, label={listing:q8}]{question8.m}
+
+    \item The GO transit train has $n$ cars and there are $m$ $(m>n)$ passengers waiting to board. Each passenger randomly chooses the car that he will board. Find the probability that that there will be at least one passenger per car.
+
+    There are $n^m$ ways that $m$ passengers can fit into $n$ cars. To find the probability that there will be at least one passenger per car, we need to find the number of ways there can be at least one passenger per car and divide it by the total number of ways $m$ passengers can fit into $n$ cars. 
+    
+    There are $P(m,n)$ or $\frac{m!}{(m-n)!}$ ways for $n$ out of the $m$ passengers to arrange themselves into $n$ cars, such that every car has one person. This leaves $m-n$ passengers who can go into any car, which can be done in $n^{(m-n)}$ ways. Therefore, there are $P(m,n) \cdot n^{(m-n)} = (\frac{m!}{(m-n)!})n^{(m-n)}$ ways of having at least one passenger per car.
+
+    The probability that there will be at least one passenger per car is $(\frac{m!}{(m-n)!})n^{(m-n)} / n^m$ or $(\frac{m!}{(m-n)!}) / n^n$.
+\end{enumerate}
+\end{document}
